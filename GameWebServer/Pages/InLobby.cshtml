@@ -1,0 +1,11 @@
+﻿@page
+@model InLobbyModel
+@{
+	ViewData["Title"] = "Rebellion";
+}
+
+<h1>Waiting for lobby to start...</h1>
+<input type="button" id="backButton" onclick="backButtonPressed" value="Back" />
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/inlobby.js"></script>
