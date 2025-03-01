@@ -27,8 +27,9 @@ namespace GameWebServer.Hubs
 
     public class ClientHub : Hub
     {
-		//string gameURL = "https://localhost:7003";
-		string gameURL = "http://192.168.1.71:5098";
+        //string gameURL = "https://localhost:7003";
+        string gameURL = "http://10.60.66.204:5098";
+        //string gameURL = "http://192.168.1.71:5098";
 
 		// Game application tasks
 		// Game application requests a room id
