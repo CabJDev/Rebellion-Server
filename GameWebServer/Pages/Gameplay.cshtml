@@ -1,0 +1,105 @@
+﻿@page
+@model GameplayModel
+@{
+	ViewData["Title"] = "Rebellion";
+}
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+	<link rel="stylesheet" href="~/css/gameplay.css">
+	</head>
+	<body>
+		<div class="row">
+			<div class="column">
+				<div class="rolesContainer">
+					<h2>Role:</h2>
+					<p id="alignment"></p>
+					<p id="roleName"></p>
+					<p id="roleDesc"></p>
+					<p id="winConDesc"></p>
+				</div>
+			</div>
+			<div class="column">
+				<div class="chatboxContainer">
+					<div class="chatBox">
+					</div>
+					<div class="messageBox">
+						<input type="text" id="messageInput" placeholder="Type your message...">
+						<button id="messageSendButton">></button>
+					</div>
+				</div>
+			</div>
+			<div class="column">
+				<div class="playerlistContainer">
+					<h1>Player List</h1>
+					<div class="player" id="p1">
+						<p id="player1Name">Player 1</p>
+						<button id="player1Button"></button>
+					</div>
+					<div class="player" id="p2">
+						<p id="player2Name">Player 2</p>
+						<button id="player2Button"></button>
+					</div>
+					<div class="player" id="p3">
+						<p id="player3Name">Player 3</p>
+						<button id="player3Button"></button>
+					</div>
+					<div class="player" id="p4">
+						<p id="player4Name">Player 4</p>
+						<button id="player4Button"></button>
+					</div>
+					<div class="player" id="p5">
+						<p id="player5Name">Player 5</p>
+						<button id="player5Button"></button>
+					</div>
+					<div class="player" id="p6">
+						<p id="player6Name">Player 6</p>
+						<button id="player6Button"></button>
+					</div>
+					<div class="player" id="p7">
+						<p id="player7Name">Player 7</p>
+						<button id="player7Button"></button>
+					</div>
+					<div class="player" id="p8">
+						<p id="player8Name">Player 8</p>
+						<button id="player8Button"></button>
+					</div>
+					<div class="player" id="p9">
+						<p id="player9Name">Player 9</p>
+						<button id="player9Button"></button>
+					</div>
+					<div class="player" id="p10">
+						<p id="player10Name">Player 10</p>
+						<button id="player10Button"></button>
+					</div>
+					<div class="player" id="p11">
+						<p id="player11Name">Player 11</p>
+						<button id="player11Button"></button>
+					</div>
+					<div class="player" id="p12">
+						<p id="player12Name">Player 12</p>
+						<button id="player12Button"></button>
+					</div>
+					<div class="player" id="p13">
+						<p id="player13Name">Player 13</p>
+						<button id="player13Button"></button>
+					</div>
+					<div class="player" id="p14">
+						<p id="player14Name">Player 14</p>
+						<button id="player14Button"></button>
+					</div>
+					<div class="player" id="p15">
+						<p id="player15Name">Player 15</p>
+						<button id="player15Button"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/clienthub.js"></script>
+<script src="~/js/gameplay.js"></script>

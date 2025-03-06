@@ -4,8 +4,19 @@
 	ViewData["Title"] = "Rebellion";
 }
 
-<h1>Waiting for lobby to start...</h1>
-<input type="button" id="backButton" onclick="backButtonPressed" value="Back" />
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<link rel="stylesheet" href="~/css/inlobby.css">
+	</head>
+	<body>
+		<h1>Waiting for lobby to start...</h1>
+		<div class="spinner"><span class="loader"></span></div>
+		<input type="button" id="backButton" onclick="backButtonPressed" value="Back" />
+	</body>
+</html>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/clienthub.js"></script>
 <script src="~/js/inlobby.js"></script>

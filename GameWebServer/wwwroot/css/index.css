@@ -1,0 +1,82 @@
+﻿* {
+    font-family: Sylfaen;
+}
+
+body {
+    background-color: #22222f;
+}
+
+h1 {
+    color: #fff;
+    text-align: center;
+    display: block;
+    margin-bottom:auto;
+    font-size: 10vh;
+}
+
+p {
+    color: #f00;
+    text-align: center;
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 4vh;
+}
+
+label {
+    color: #fff;
+    display: block;
+    text-align: center;
+    font-size: 4vh;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    min-height: 50vh;
+    margin-top: auto;
+}
+
+form {
+    width: 50vh
+}
+
+fieldset {
+    display: contents;
+}
+
+input {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25vh;
+    height: 0px;
+    border-radius: 10px;
+    font-size: 2.5vh;
+    text-align: center;
+    border: 0;
+}
+
+input[type="text"] {
+    margin-top: 0.5vh;
+    margin-bottom: 2vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+
+input[type="submit"] {
+    background-color: #33333f;
+    color: #fff;
+    font-size: 4vh;
+    height: 6vh;
+    border-radius: 30px;
+    transition: 0.2s;
+}
+
+input[type="submit"]:hover {
+    background-color: #33335f;
+}
+
+input[type="submit"]:active {
+    background-color: #33331f;
+}
