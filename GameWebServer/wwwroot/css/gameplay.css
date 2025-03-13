@@ -95,6 +95,11 @@ input[type="text"] {
     top: 10%;
     background-color: rgba(81, 81, 170, 0.5);
     font-size: 2vh;
+    transition-duration: 0.2s;
+}
+
+#messageSendButton:hover {
+    background-color: rgba(51, 51, 140, 0.5);
 }
 
 .chatBox {
@@ -161,4 +166,58 @@ input[type="text"] {
     height: 100%;
     font-size: 3vh;
     top: -60%;
+}
+
+.incoming {
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 1vh;
+    color: black;
+}
+
+.incoming h3 {
+    margin-left: 5%;
+    font-size: 2.5vh;
+    margin-bottom: 0%;
+}
+
+.incoming p {
+    margin-left: 5%;
+    margin-top: 0%;
+    padding-bottom: 1%;
+    font-size: 2vh;
+}
+
+.outgoing {
+    background-color: rgba(200, 255, 200, 0.4);
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 1vh;
+    color: black;
+}
+
+.outgoing p {
+    margin-left: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    font-size: 2vh;
+}
+
+.system {
+    background-color: rgba(255, 255, 100, 0.4);
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 1vh;
+    color: black;
+}
+
+.system p {
+    margin-left: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    font-size: 2vh;
 }

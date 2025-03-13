@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GameWebServer.Pages
 {
-    public class InLobbyModel : PageModel
+	//[RequireHttps]
+	public class InLobbyModel : PageModel
     {
         public void OnGet()
         {

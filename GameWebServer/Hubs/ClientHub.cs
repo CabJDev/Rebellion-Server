@@ -27,9 +27,7 @@ namespace GameWebServer.Hubs
 
 	public class ClientHub : Hub
 	{
-		//string gameURL = "http://localhost:5098";
-		//string gameURL = "http://10.60.66.204:5098";
-		string gameURL = "http://192.168.1.71:5098";
+		string gameURL = "https://rebelliongame.fun";
 
 		// Game application tasks
 		// Game application requests a room id
@@ -115,6 +113,44 @@ namespace GameWebServer.Hubs
 			if (!ClientHandler.Users.ContainsKey(hash)) return;
 			foreach (string connectionID in ClientHandler.Users[hash])
 				await Clients.Client(connectionID).SendAsync("EnableButtons", toEnable);
+		}
+
+		// Game applications sends client browser a command to disable buttons
+		public async Task DisableButtons(string lobbyCode)
+		{
+			foreach (string hash in ClientHandler.LobbyPlayerMap[lobbyCode])
+				foreach (string connectionID in ClientHandler.Users[hash])
+					await Clients.Client(connectionID).SendAsync("DisableButtons");
+		} 
+
+		// Game applications sends client browser a command to strike out a dead player
+		public async Task PlayerKilled(string lobbyCode, int playerIndex)
+		{
+			foreach (string hash in ClientHandler.LobbyPlayerMap[lobbyCode])
+				foreach (string connectionID in ClientHandler.Users[hash])
+					await Clients.Client(connectionID).SendAsync("PlayerKilled", playerIndex);
+		}
+
+		// Game application sends client browsers a message in their chats
+		public async Task SystemMessage(string lobbyCode, string message, string timeSent)
+		{
+			foreach (string hash in ClientHandler.LobbyPlayerMap[lobbyCode])
+				foreach (string connectionID in ClientHandler.Users[hash])
+					await Clients.Client(connectionID).SendAsync("ReceiveSystemMessage", message, timeSent);
+		}
+
+		// Game application sends client browsers a message from other players
+		public async Task PlayerMessage(string sender, string[] hashes, string message)
+		{
+			foreach (string hash in hashes)
+				foreach (string connectionID in ClientHandler.Users[hash])
+					await Clients.Client(connectionID).SendAsync("ReceivePlayerMessage", sender, message);
+		}
+
+		public async Task PlayerSystemMessage(string hash, string message)
+		{
+			foreach (string connectionID in ClientHandler.Users[hash])
+				await Clients.Client(connectionID).SendAsync("ReceiveSystemMessage", message);
 		}
 
 		// Game application closes connection with web server
@@ -264,7 +300,7 @@ namespace GameWebServer.Hubs
 
 					await Clients.Client(ClientHandler.ConnectedApplications[lobbyCode]).SendAsync("ReceiveMessage", msg);
 				}
-				else await Clients.Client(Context.ConnectionId).SendAsync("ErrorMessage", "Already connected!");
+				else await Clients.Client(Context.ConnectionId).SendAsync("ErrorMessage", "That name already exists on that lobby!");
 			}
 			else
 			{
@@ -272,8 +308,50 @@ namespace GameWebServer.Hubs
 			}
 		}
 
+		// Client browser backs out of lobby
+		public async Task UserIntentionalDisconnect(string cookie)
+		{
+			string[] cookieInfo = ParseCookie(cookie);
+
+			if (cookieInfo.Count() < 3) return;
+
+			string hash = cookieInfo[0];
+			string name = cookieInfo[1];
+			string lobbyCode = cookieInfo[2];
+
+			if (!ClientHandler.ConnectedApplications.ContainsKey(lobbyCode))
+			{
+				await Clients.Client(Context.ConnectionId).SendAsync("SetCookie", $"sessionId=,name=,lobbyCode=;expires=Thu, 01 Jan 1970 00:00:00 UTC;");
+				return;
+			}
+			if (!VerifyCookieHash(hash, name, lobbyCode)) return;
+
+			if (ClientHandler.Users.ContainsKey(hash))
+			{
+				lock (ClientHandler.Users)
+				{
+					HashSet<string> connections = ClientHandler.Users[hash];
+					connections.Remove(Context.ConnectionId);
+					ClientHandler.Users[hash] = connections;
+				}
+
+				if (ClientHandler.Users.ContainsKey(hash) && ClientHandler.Users[hash].Count == 0)
+				{
+					lock (ClientHandler.LobbyPlayerMap) { ClientHandler.LobbyPlayerMap[lobbyCode].Remove(hash); }
+					lock (ClientHandler.PlayerLobbyMap) { ClientHandler.PlayerLobbyMap.Remove(hash); }
+					lock (ClientHandler.Users) { ClientHandler.Users.Remove(hash); }
+
+					Message msg = new Message();
+					msg.Type = "RemovePlayer";
+					msg.Content = $"{hash}";
+
+					await Clients.Client(ClientHandler.ConnectedApplications[lobbyCode]).SendAsync("ReceiveMessage", msg);
+				}
+			}
+		}
+
 		// Client browser asks for player names
-		public async Task RetrievePlayerNames(string cookie)
+		public async Task RetrievePlayerNames(string cookie, long timeStamp)
 		{
 			string[] cookieInfo = ParseCookie(cookie);
 
@@ -292,13 +370,13 @@ namespace GameWebServer.Hubs
 
 			Message msg = new Message();
 			msg.Type = "RetrievePlayerNames";
-			msg.Content = hash;
+			msg.Content = $"{hash},{timeStamp}";
 
 			await Clients.Client(ClientHandler.ConnectedApplications[lobbyCode]).SendAsync("ReceiveMessage", msg);
 		}
 
 		// Client browser asks for role information
-		public async Task RetrieveRoleInfo(string cookie)
+		public async Task RetrieveRoleInfo(string cookie, long timeStamp)
 		{
 			string[] cookieInfo = ParseCookie(cookie);
 
@@ -317,7 +395,57 @@ namespace GameWebServer.Hubs
 
 			Message msg = new Message();
 			msg.Type = "RetrieveRoleInfo";
-			msg.Content = hash;
+			msg.Content = $"{hash},{timeStamp}";
+
+			await Clients.Client(ClientHandler.ConnectedApplications[lobbyCode]).SendAsync("ReceiveMessage", msg);
+		}
+
+		// Client browser sends target selected
+		public async Task PlayerTarget(string cookie, int target, long timeStamp)
+		{
+			string[] cookieInfo = ParseCookie(cookie);
+
+			if (cookieInfo.Count() < 3) return;
+
+			string hash = cookieInfo[0];
+			string name = cookieInfo[1];
+			string lobbyCode = cookieInfo[2];
+
+			if (!ClientHandler.ConnectedApplications.ContainsKey(lobbyCode))
+			{
+				await Clients.Client(Context.ConnectionId).SendAsync("SetCookie", $"sessionId=,name=,lobbyCode=;expires=Thu, 01 Jan 1970 00:00:00 UTC;");
+				return;
+			}
+			if (!VerifyCookieHash(hash, name, lobbyCode)) return;
+
+			Message msg = new Message();
+			msg.Type = "SetPlayerTarget";
+			msg.Content = $"{hash},{target},{timeStamp}";
+
+			await Clients.Client(ClientHandler.ConnectedApplications[lobbyCode]).SendAsync("ReceiveMessage", msg);
+		}
+
+		// Client browser sends a message
+		public async Task SendMessage(string cookie, string message)
+		{
+			string[] cookieInfo = ParseCookie(cookie);
+
+			if (cookieInfo.Count() < 3) return;
+
+			string hash = cookieInfo[0];
+			string name = cookieInfo[1];
+			string lobbyCode = cookieInfo[2];
+
+			if (!ClientHandler.ConnectedApplications.ContainsKey(lobbyCode))
+			{
+				await Clients.Client(Context.ConnectionId).SendAsync("SetCookie", $"sessionId=,name=,lobbyCode=;expires=Thu, 01 Jan 1970 00:00:00 UTC;");
+				return;
+			}
+			if (!VerifyCookieHash(hash, name, lobbyCode)) return;
+
+			Message msg = new Message();
+			msg.Type = "PlayerSendMessage";
+			msg.Content = $"{hash},{message}";
 
 			await Clients.Client(ClientHandler.ConnectedApplications[lobbyCode]).SendAsync("ReceiveMessage", msg);
 		}

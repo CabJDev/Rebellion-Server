@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GameWebServer.Pages;
 
+//[RequireHttps]
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
