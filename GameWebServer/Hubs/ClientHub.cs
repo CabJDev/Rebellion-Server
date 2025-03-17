@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.SignalR;
+using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -100,11 +103,11 @@ namespace GameWebServer.Hubs
 		}
 
 		// Game application sends a list of player's names to client browser
-		public async Task GetNames(string hash, string[] names)
+		public async Task GetNames(string hash, string[] names, int[] specials)
 		{
 			if (!ClientHandler.Users.ContainsKey(hash)) return;
 			foreach (string connectionID in ClientHandler.Users[hash])
-				await Clients.Client(connectionID).SendAsync("GetNames", names);
+				await Clients.Client(connectionID).SendAsync("GetNames", names, specials);
 		}
 
 		// Game applications sends client browser a list of buttons to enable
@@ -188,12 +191,17 @@ namespace GameWebServer.Hubs
 
 		// Client browser tasks
 		// Client browser connects to the website
-		public async Task UserConnect(string cookie)
+		public async Task UserConnect(string cookie, string currentUrl)
 		{
 			// 0 = hash, 1 = name, 2 = lobbyCode
 			string[] cookieInfo = ParseCookie(cookie);
 
-			if (cookieInfo.Length < 3) return;
+			if (cookieInfo.Length < 3)
+			{
+				if (currentUrl != (gameURL + "/"))
+					await Clients.Client(Context.ConnectionId).SendAsync("Redirect", $"{gameURL}");
+				return;
+			}
 
 			string hash = cookieInfo[0];
 			string name = cookieInfo[1];
@@ -294,6 +302,19 @@ namespace GameWebServer.Hubs
 				string hash = StringToSHA256(name + ClientHandler.ConnectedApplications[lobbyCode]);
 				if (!ClientHandler.PlayerLobbyMap.ContainsKey(hash))
 				{
+
+					if (name.Length < 2 || name.Length > 12)
+					{
+						await Clients.Client(Context.ConnectionId).SendAsync("ErrorMessage", "Your name must be between 2 and 12 characters long!");
+						return;
+					}
+
+					if (!name.All(char.IsLetterOrDigit))
+					{
+						await Clients.Client(Context.ConnectionId).SendAsync("ErrorMessage", "Your name must be alphanumeric!");
+						return;
+					}
+
 					Message msg = new Message();
 					msg.Type = "AddPlayer";
 					msg.Content = $"{Context.ConnectionId},{name},{hash}";

@@ -20,7 +20,7 @@ setTimeout(function () {
 }, 1000);
 
 function UserConnected() {
-    connection.invoke("UserConnect", document.cookie).catch(function (err) {
+    connection.invoke("UserConnect", document.cookie, window.location.href).catch(function (err) {
         return console.error(err.toString());
     });
 }

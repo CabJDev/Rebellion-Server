@@ -19,11 +19,11 @@
 				<fieldset>
 					<div>
 						<label for="LobbyCode">Lobby Code:</label>
-						<input type="text" id="lobbyCode" value="" autocomplete="off" />
+						<input type="text" id="lobbyCode" value="" autocomplete="off" maxlength="6" onkeydown="lobbyCodeLimit(this);" onkeyup="lobbyCodeLimit(this);" />
 					</div>
 					<div>
 						<label for="Name">Name:</label>
-						<input type="text" id="name" value="" autocomplete="off" />
+						<input type="text" id="name" value="" autocomplete="off" maxlength="12" onkeydown="nameLimit(this);" onkeyup="nameLimit(this);" />
 					</div>
 					<div>
 						<label>&nbsp;</label>

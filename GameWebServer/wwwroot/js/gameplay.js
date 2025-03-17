@@ -22,9 +22,12 @@ function Initialize() {
 }
 
 var currentChoice = 0;
+var buttonDebounce = false;
 
 // Button events
 document.getElementById("player1Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
+    buttonDebounce = true;
     ResetButtons()
     if (currentChoice != 1) {
         document.getElementById("player1Button").innerText = "X";
@@ -33,8 +36,13 @@ document.getElementById("player1Button").addEventListener("click", function () {
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player2Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 2) {
         document.getElementById("player2Button").innerText = "X";
@@ -43,8 +51,12 @@ document.getElementById("player2Button").addEventListener("click", function () {
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player3Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 3) {
         document.getElementById("player3Button").innerText = "X";
@@ -53,8 +65,12 @@ document.getElementById("player3Button").addEventListener("click", function () {
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player4Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 4) {
         document.getElementById("player4Button").innerText = "X";
@@ -63,8 +79,12 @@ document.getElementById("player4Button").addEventListener("click", function () {
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player5Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 5) {
         document.getElementById("player5Button").innerText = "X";
@@ -73,8 +93,12 @@ document.getElementById("player5Button").addEventListener("click", function () {
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player6Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 6) {
         document.getElementById("player6Button").innerText = "X";
@@ -83,8 +107,12 @@ document.getElementById("player6Button").addEventListener("click", function () {
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player7Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 7) {
         document.getElementById("player7Button").innerText = "X";
@@ -93,8 +121,12 @@ document.getElementById("player7Button").addEventListener("click", function () {
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player8Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 8) {
         document.getElementById("player8Button").innerText = "X";
@@ -103,8 +135,12 @@ document.getElementById("player8Button").addEventListener("click", function () {
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player9Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 9) {
         document.getElementById("player9Button").innerText = "X";
@@ -113,8 +149,12 @@ document.getElementById("player9Button").addEventListener("click", function () {
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player10Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 10) {
         document.getElementById("player10Button").innerText = "X";
@@ -123,8 +163,12 @@ document.getElementById("player10Button").addEventListener("click", function () 
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player11Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 11) {
         document.getElementById("player11Button").innerText = "X";
@@ -133,8 +177,12 @@ document.getElementById("player11Button").addEventListener("click", function () 
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player12Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 12) {
         document.getElementById("player12Button").innerText = "X";
@@ -143,8 +191,12 @@ document.getElementById("player12Button").addEventListener("click", function () 
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player13Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 13) {
         document.getElementById("player13Button").innerText = "X";
@@ -153,8 +205,12 @@ document.getElementById("player13Button").addEventListener("click", function () 
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player14Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 14) {
         document.getElementById("player14Button").innerText = "X";
@@ -163,8 +219,12 @@ document.getElementById("player14Button").addEventListener("click", function () 
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 document.getElementById("player15Button").addEventListener("click", function () {
+    if (buttonDebounce) return;
     ResetButtons()
     if (currentChoice != 15) {
         document.getElementById("player15Button").innerText = "X";
@@ -173,6 +233,9 @@ document.getElementById("player15Button").addEventListener("click", function () 
     else { currentChoice = 0; }
 
     SendTarget(currentChoice);
+    setTimeout(function () {
+        buttonDebounce = false;
+    }, 100);
 })
 // Button events
 
@@ -209,6 +272,7 @@ function SendMessage() {
     })
 
     document.getElementById("messageInput").value = '';
+    document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
 }
 
 function ResetButtons() {
@@ -260,11 +324,18 @@ connection.on("GetRoles", (name, role, winCon) => {
     document.getElementById("winConDesc").innerText = winCon;
 })
 
-connection.on("GetNames", (names) => {
+connection.on("GetNames", (names, special) => {
     for (var i = 0; i < 15; i++) {
         if (names[i] != "") {
             document.getElementById("player" + (i + 1) + "Name").innerText = names[i];
             document.getElementById("p" + (i + 1)).style.opacity = "1";
+
+            if (special[i] == 1) {
+                document.getElementById("p" + (i + 1)).style.backgroundColor = "rgba(100, 155, 100, 1)";
+            }
+            else if (special[i] == 2) {
+                document.getElementById("p" + (i + 1)).style.backgroundColor = "rgba(255, 100, 100, 1)";
+            }
         }
     }
 })
@@ -293,9 +364,13 @@ connection.on("ReceivePlayerMessage", (sender, message) => {
     const text = document.createElement("p")
     text.innerText = message;
     incomingDiv.appendChild(text);
+
+    document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
 })
 
 connection.on("ReceiveSystemMessage", (message, timestamp) => {
+    console.log(Date.now() - Number(timestamp));
+
     const systemDiv = document.createElement("div");
     systemDiv.className = "system";
 
@@ -306,5 +381,5 @@ connection.on("ReceiveSystemMessage", (message, timestamp) => {
     text.innerText = message;
     systemDiv.appendChild(text);
 
-    console.log(Date.now() - Number(timestamp));
+    document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
 })
